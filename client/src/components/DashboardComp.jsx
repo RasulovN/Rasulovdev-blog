@@ -10,6 +10,8 @@ import { AiOutlineProject } from "react-icons/ai";
 import { TbCertificate } from "react-icons/tb";
 import { Button, Table } from 'flowbite-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 
 export default function DashboardComp() {
   const [users, setUsers] = useState([]);
@@ -28,6 +30,7 @@ export default function DashboardComp() {
   const [lastMonthWins, setLastMonthWins] = useState(0);
   const [lastMonthComments, setLastMonthComments] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
+  const [t, i18n] = useTranslation("global");
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -109,7 +112,7 @@ export default function DashboardComp() {
         <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
           <div className='flex justify-between'>
             <div className=''>
-              <h3 className='text-gray-500 text-md uppercase'>Total Users</h3>
+              <h3 className='text-gray-500 text-md uppercase'>{t("dash.dash_main.total_users")}</h3>
               <p className='text-2xl'>{totalUsers}</p>
             </div>
             <HiOutlineUserGroup className='bg-teal-600  text-white rounded-full text-5xl p-3 shadow-lg' />
@@ -119,14 +122,14 @@ export default function DashboardComp() {
               <HiArrowNarrowUp />
               {lastMonthUsers}
             </span>
-            <div className='text-gray-500'>Last month</div>
+            <div className='text-gray-500'>{t("dash.dash_main.last_cards")}</div>
           </div>
         </div>
         <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
           <div className='flex justify-between'>
             <div className=''>
               <h3 className='text-gray-500 text-md uppercase'>
-                Total Comments
+                {t("dash.dash_main.total_comments")}
               </h3>
               <p className='text-2xl'>{totalComments}</p>
             </div>
@@ -137,14 +140,14 @@ export default function DashboardComp() {
               <HiArrowNarrowUp />
               {lastMonthComments}
             </span>
-            <div className='text-gray-500'>Last month</div>
+            <div className='text-gray-500'>{t("dash.dash_main.last_cards")}</div>
           </div>
         </div>
         <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
           <div className='flex justify-between'>
             <div className=''>
               <h3 className='text-gray-500 text-md uppercase'>
-                Total Projects
+              {t("dash.dash_main.total_projects")}
               </h3>
               <p className='text-2xl'>{totalProjects}</p>
             </div>
@@ -155,7 +158,7 @@ export default function DashboardComp() {
               <HiArrowNarrowUp />
               {lastMonthProjects}
             </span>
-            <div className='text-gray-500'>Last month</div>
+            <div className='text-gray-500'>{t("dash.dash_main.last_cards")}</div>
           </div>
         </div>
         {/* Wins */}
@@ -163,7 +166,7 @@ export default function DashboardComp() {
           <div className='flex justify-between'>
             <div className=''>
               <h3 className='text-gray-500 text-md uppercase'>
-                Total Wins
+                {t("dash.dash_main.total_wins")}
               </h3>
               <p className='text-2xl'>{totalWins}</p>
             </div>
@@ -174,14 +177,14 @@ export default function DashboardComp() {
               <HiArrowNarrowUp />
               {lastMonthWins}
             </span>
-            <div className='text-gray-500'>Last month</div>
+            <div className='text-gray-500'>{t("dash.dash_main.last_cards")}</div>
           </div>
         </div>
         {/* Posts */}
         <div className='flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-72 w-full rounded-md shadow-md'>
           <div className='flex justify-between'>
             <div className=''>
-              <h3 className='text-gray-500 text-md uppercase'>Total Posts</h3>
+              <h3 className='text-gray-500 text-md uppercase'>{t("dash.dash_main.total_posts")}</h3>
               <p className='text-2xl'>{totalPosts}</p>
             </div>
             <HiDocumentText className='bg-lime-600  text-white rounded-full text-5xl p-3 shadow-lg' />
@@ -191,7 +194,7 @@ export default function DashboardComp() {
               <HiArrowNarrowUp />
               {lastMonthPosts}
             </span>
-            <div className='text-gray-500'>Last month</div>
+            <div className='text-gray-500'>{t("dash.dash_main.last_cards")}</div>
           </div>
         </div>
       </div>
@@ -199,9 +202,9 @@ export default function DashboardComp() {
       <div className='flex flex-wrap gap-4 py-3 mx-auto justify-center'>
         <div className='flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800'>
           <div className='flex justify-between  p-3 text-sm font-semibold'>
-            <h1 className='text-center p-2'>Recent users</h1>
+            <h1 className='text-center p-2'>{t("dash.dash_main.recent_users")}</h1>
             <Button outline gradientDuoTone='purpleToPink'>
-              <Link to={'/dashboard?tab=users'}>See all</Link>
+              <Link to={'/dashboard?tab=users'}>{t("dash.dash_main.see_all")}</Link>
             </Button>
           </div>
           <Table hoverable>
@@ -228,9 +231,9 @@ export default function DashboardComp() {
         </div>
         <div className='flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800'>
           <div className='flex justify-between  p-3 text-sm font-semibold'>
-            <h1 className='text-center p-2'>Recent comments</h1>
+            <h1 className='text-center p-2'>{t("dash.dash_main.recent_comments")}</h1>
             <Button outline gradientDuoTone='purpleToPink'>
-              <Link to={'/dashboard?tab=comments'}>See all</Link>
+              <Link to={'/dashboard?tab=comments'}>{t("dash.dash_main.see_all")}</Link>
             </Button>
           </div>
           <Table hoverable>
@@ -254,9 +257,9 @@ export default function DashboardComp() {
         {/* Wins Certificates */}
         <div className='flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800'>
           <div className='flex justify-between  p-3 text-sm font-semibold'>
-            <h1 className='text-center p-2'>Recent Certificates</h1>
+            <h1 className='text-center p-2'>{t("dash.dash_main.recent_wins")}</h1>
             <Button outline gradientDuoTone='purpleToPink'>
-              <Link to={'/dashboard?tab=wins'}>See all</Link>
+              <Link to={'/dashboard?tab=wins'}>{t("dash.dash_main.see_all")}</Link>
             </Button>
           </div>
           <Table hoverable>
@@ -287,9 +290,9 @@ export default function DashboardComp() {
 
         <div className='flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800'>
           <div className='flex justify-between  p-3 text-sm font-semibold'>
-            <h1 className='text-center p-2'>Recent posts</h1>
+            <h1 className='text-center p-2'>{t("dash.dash_main.recent_posts")}</h1>
             <Button outline gradientDuoTone='purpleToPink'>
-              <Link to={'/dashboard?tab=posts'}>See all</Link>
+              <Link to={'/dashboard?tab=posts'}>{t("dash.dash_main.see_all")}</Link>
             </Button>
           </div>
           <Table hoverable>
@@ -319,9 +322,9 @@ export default function DashboardComp() {
         {/* project */}
         <div className='flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800'>
           <div className='flex justify-between  p-3 text-sm font-semibold'>
-            <h1 className='text-center p-2'>Recent Project</h1>
+            <h1 className='text-center p-2'>{t("dash.dash_main.recent_projects")}</h1>
             <Button outline gradientDuoTone='purpleToPink'>
-              <Link to={'/dashboard?tab=projects'}>See all</Link>
+              <Link to={'/dashboard?tab=projects'}>{t("dash.dash_main.see_all")}</Link>
             </Button>
           </div>
           <Table hoverable>

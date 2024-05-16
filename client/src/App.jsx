@@ -19,12 +19,17 @@ import UpdateProject from './pages/UpdateProject';
 import CreateWin from './pages/CreateWin';
 import UpdateWin from './pages/UpdateWin';
 import Contact from './pages/Contact';
+import CookieComponent from './components/CookieCom';
+import PageNotFound from './pages/PageNotFound';
+import InternalServer from './pages/InternalServer';
+import { Switch } from 'antd';
 
 export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
       <Header />
+      <CookieComponent />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
@@ -32,6 +37,11 @@ export default function App() {
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/search' element={<Search />} />
+        
+        <Route exact path="/500" element={<InternalServer />} />
+        {/* This should be the last route */}
+        <Route  path="*" element={<PageNotFound />} />
+
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
         </Route>
@@ -45,6 +55,7 @@ export default function App() {
         </Route>
 
         <Route path='/project' element={<ProjectPage />} />
+        <Route path='/project/:projectSlug' element={<ProjectPage />} />
         <Route path='/post/:postSlug' element={<PostPage />} />
       </Routes>
       <Footer />

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CallToAction from '../components/CallToAction';
 import { Button, Spinner } from 'flowbite-react';
+import { useTranslation } from 'react-i18next';
+
 
 export default function ProjectPage() {
   const { individualProjects } = useParams();
@@ -9,6 +11,7 @@ export default function ProjectPage() {
   const [error, setError] = useState(false);
   const [projects, setProjects] = useState(null);
   const [recentProjects, setRecentProjects] = useState(null);
+  const [t, i18n] = useTranslation("global");
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -59,7 +62,7 @@ export default function ProjectPage() {
 
   return (
     <div className='min-h-screen max-w-2xl mx-auto flex justify-center items-center flex-col gap-6 p-3'>
-     
+     <h1 className='text-3xl font font-semibold text-center my-7'>{t("projects.project_h1")}</h1>
       <div>
       {/* {recentProjects.map(projectId => (
       <CallToAction key={projectId} project={projects.find(project => project._id === projectId)} recentProjects={recentProjects} />
@@ -69,7 +72,7 @@ export default function ProjectPage() {
         {/* ))} */}
       </div>
 
-      <p className='text-md text-gray-500'>Build fun and engaging projects while learning HTML, CSS, and JavaScript!</p>
+      <p className='text-md text-gray-500'>{t("projects.project_subs")}</p>
     </div>
   )
 }

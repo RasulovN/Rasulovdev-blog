@@ -13,6 +13,8 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
 
 export default function UpdateWin() {
   const [file, setFile] = useState(null);
@@ -20,6 +22,7 @@ export default function UpdateWin() {
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
+  const [t, i18n] = useTranslation("global");
   const { winId } = useParams();
 
   const navigate = useNavigate();
@@ -109,7 +112,7 @@ export default function UpdateWin() {
   };
   return (
     <div className='p-3 max-w-3xl mx-auto min-h-screen'>
-      <h1 className='text-center text-3xl my-7 font-semibold'>Update win</h1>
+      <h1 className='text-center text-3xl my-7 font-semibold'>{t("dash.win_update.h1")}</h1>
       <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <div className='flex flex-col gap-4 sm:flex-row justify-between'>
           <TextInput
@@ -182,7 +185,7 @@ export default function UpdateWin() {
           }}
         />
         <Button type='submit' gradientDuoTone='purpleToPink'>
-          Update win
+        {t("dash.win_update.btn")}
         </Button>
         {publishError && (
           <Alert className='mt-5' color='failure'>

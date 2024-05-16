@@ -22,6 +22,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function DashProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -34,6 +35,7 @@ export default function DashProfile() {
   const [updateUserError, setUpdateUserError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
+  const [t, i18n] = useTranslation("global");
   const filePickerRef = useRef();
   const dispatch = useDispatch();
   const handleImageChange = (e) => {
@@ -248,7 +250,7 @@ export default function DashProfile() {
               gradientDuoTone='purpleToPink'
               className='w-full'
             >
-              Create a post
+              {t("dash.add_post")}
             </Button>
           </Link>
         )}
@@ -259,7 +261,7 @@ export default function DashProfile() {
               gradientDuoTone='purpleToPink'
               className='w-full'
             >
-              Create a Project
+              {t("profile.add_project")}
             </Button>
           </Link>
         )}
@@ -270,17 +272,17 @@ export default function DashProfile() {
               gradientDuoTone='purpleToPink'
               className='w-full'
             >
-              Create a Wins
+              {t("profile.add_wins")}
             </Button>
           </Link>
         )}
       </form>
       <div className='text-red-500 flex justify-between mt-5'>
         <span onClick={() => setShowModal(true)} className='cursor-pointer'>
-          Delete Account
+          {t("profile.delete")}
         </span>
         <span onClick={handleSignout} className='cursor-pointer'>
-          Sign Out
+          {t("profile.out")}
         </span>
       </div>
       {updateUserSuccess && (
@@ -309,14 +311,14 @@ export default function DashProfile() {
           <div className='text-center'>
             <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
             <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
-              Are you sure you want to delete your account?
+            {t("admin.del_alert")} account?
             </h3>
             <div className='flex justify-center gap-4'>
               <Button color='failure' onClick={handleDeleteUser}>
-                Yes, I'm sure
+              {t("admin.del_yes")}
               </Button>
               <Button color='gray' onClick={() => setShowModal(false)}>
-                No, cancel
+              {t("admin.del_no")}
               </Button>
             </div>
           </div>

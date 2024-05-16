@@ -14,12 +14,16 @@ import { Link, useLocation } from 'react-router-dom';
 import { signoutSuccess } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
 
 export default function DashSidebar() {
   const location = useLocation();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [tab, setTab] = useState('');
+  const [t, i18n] = useTranslation("global");
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tabFromUrl = urlParams.get('tab');
@@ -52,9 +56,7 @@ export default function DashSidebar() {
                 active={tab === 'dash' || !tab}
                 icon={HiChartPie}
                 as='div'
-              >
-                Dashboard
-              </Sidebar.Item>
+              >{t("dash.side_dash.name")} </Sidebar.Item>
             </Link>
           )}
           <Link to='/dashboard?tab=profile'>
@@ -64,9 +66,7 @@ export default function DashSidebar() {
               label={currentUser.isAdmin ? 'Admin' : 'User'}
               labelColor='dark'
               as='div'
-            >
-              Profile
-            </Sidebar.Item>
+            >{t("dash.side_dash.profile")}</Sidebar.Item>
           </Link>
           {currentUser.isAdmin && (
             <Link to='/dashboard?tab=posts'>
@@ -74,9 +74,7 @@ export default function DashSidebar() {
                 active={tab === 'posts'}
                 icon={HiDocumentText}
                 as='div'
-              >
-                Posts
-              </Sidebar.Item>
+              >{t("dash.side_dash.posts")}</Sidebar.Item>
             </Link>
           )}
           {currentUser.isAdmin && (
@@ -85,9 +83,7 @@ export default function DashSidebar() {
                 active={tab === 'projects'}
                 icon={AiOutlineProject}
                 as='div'
-              >
-                Projects
-              </Sidebar.Item>
+              >{t("dash.side_dash.projects")}</Sidebar.Item>
             </Link>
           )}
           {currentUser.isAdmin && (
@@ -117,9 +113,7 @@ export default function DashSidebar() {
                   active={tab === 'comments'}
                   icon={HiAnnotation}
                   as='div'
-                >
-                  Comments
-                </Sidebar.Item>
+                >{t("dash.side_dash.comments")}</Sidebar.Item>
               </Link>
             </>
           )}
@@ -127,9 +121,7 @@ export default function DashSidebar() {
             icon={HiArrowSmRight}
             className='cursor-pointer'
             onClick={handleSignout}
-          >
-            Sign Out
-          </Sidebar.Item>
+          >{t("profile.out")}</Sidebar.Item>
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>

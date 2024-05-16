@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { FaCheck, FaTimes } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 export default function DashUsers() {
   const { currentUser } = useSelector((state) => state.user);
@@ -10,6 +11,7 @@ export default function DashUsers() {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState('');
+  const [t, i18n] = useTranslation("global");
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -69,12 +71,12 @@ export default function DashUsers() {
         <>
           <Table hoverable className='shadow-md'>
             <Table.Head>
-              <Table.HeadCell>Date created</Table.HeadCell>
-              <Table.HeadCell>User image</Table.HeadCell>
-              <Table.HeadCell>Username</Table.HeadCell>
-              <Table.HeadCell>Email</Table.HeadCell>
+              <Table.HeadCell>{t("dash.dash_users.date")}</Table.HeadCell>
+              <Table.HeadCell>{t("dash.dash_users.image")}</Table.HeadCell>
+              <Table.HeadCell>{t("dash.dash_users.name")}</Table.HeadCell>
+              <Table.HeadCell>{t("dash.dash_users.email")}</Table.HeadCell>
               <Table.HeadCell>Admin</Table.HeadCell>
-              <Table.HeadCell>Delete</Table.HeadCell>
+              <Table.HeadCell>{t("dash.del")}</Table.HeadCell>
             </Table.Head>
             {users.map((user) => (
               <Table.Body className='divide-y' key={user._id}>
@@ -105,9 +107,7 @@ export default function DashUsers() {
                         setUserIdToDelete(user._id);
                       }}
                       className='font-medium text-red-500 hover:underline cursor-pointer'
-                    >
-                      Delete
-                    </span>
+                    >{t("admin.delete")}</span>
                   </Table.Cell>
                 </Table.Row>
               </Table.Body>
@@ -136,14 +136,14 @@ export default function DashUsers() {
           <div className='text-center'>
             <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
             <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
-              Are you sure you want to delete this user?
+              {t("admin.del_alert")} user?
             </h3>
             <div className='flex justify-center gap-4'>
               <Button color='failure' onClick={handleDeleteUser}>
-                Yes, I'm sure
+                {t("admin.del_yes")}
               </Button>
               <Button color='gray' onClick={() => setShowModal(false)}>
-                No, cancel
+                {t("admin.del_no")}
               </Button>
             </div>
           </div>

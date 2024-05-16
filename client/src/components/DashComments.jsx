@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { FaCheck, FaTimes } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 export default function DashComments() {
   const { currentUser } = useSelector((state) => state.user);
@@ -10,6 +11,7 @@ export default function DashComments() {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [commentIdToDelete, setCommentIdToDelete] = useState('');
+  const [t, i18n] = useTranslation("global");
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -101,9 +103,7 @@ export default function DashComments() {
                         setCommentIdToDelete(comment._id);
                       }}
                       className='font-medium text-red-500 hover:underline cursor-pointer'
-                    >
-                      Delete
-                    </span>
+                    >{t("admin.delete")}</span>
                   </Table.Cell>
                 </Table.Row>
               </Table.Body>

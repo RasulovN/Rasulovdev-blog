@@ -13,6 +13,8 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
 
 export default function UpdateProject() {
   const [file, setFile] = useState(null);
@@ -21,6 +23,7 @@ export default function UpdateProject() {
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
   const { projectId } = useParams();
+  const [t, i18n] = useTranslation("global");
 
   const navigate = useNavigate();
     const { currentUser } = useSelector((state) => state.user);
@@ -109,7 +112,7 @@ export default function UpdateProject() {
   };
   return (
     <div className='p-3 max-w-3xl mx-auto min-h-screen'>
-      <h1 className='text-center text-3xl my-7 font-semibold'>Update project</h1>
+      <h1 className='text-center text-3xl my-7 font-semibold'>{t("dash.project_update.h1")}</h1>
       <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <div className='flex flex-col gap-4 sm:flex-row justify-between'>
           <TextInput
@@ -204,7 +207,7 @@ export default function UpdateProject() {
           }}
         />
         <Button type='submit' gradientDuoTone='purpleToPink'>
-          Update project
+         {t("dash.project_update.btn")}
         </Button>
         {publishError && (
           <Alert className='mt-5' color='failure'>

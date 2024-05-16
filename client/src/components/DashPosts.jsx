@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
-import { set } from 'mongoose';
+import { useTranslation } from 'react-i18next';
+
 
 export default function DashPosts() {
   const { currentUser } = useSelector((state) => state.user);
@@ -11,6 +12,7 @@ export default function DashPosts() {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState('');
+  const [t, i18n] = useTranslation("global");
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -81,7 +83,7 @@ export default function DashPosts() {
                   gradientDuoTone='purpleToPink'
                   className='w-full'
                 >
-                  Create a post
+                  {t("dash.add_post")}
                 </Button>
               </Link>
             )}
@@ -91,13 +93,13 @@ export default function DashPosts() {
                 <>
                   <Table hoverable className='shadow-md'>
                     <Table.Head>
-                      <Table.HeadCell>Date updated</Table.HeadCell>
-                      <Table.HeadCell>Post image</Table.HeadCell>
-                      <Table.HeadCell>Post title</Table.HeadCell>
-                      <Table.HeadCell>Category</Table.HeadCell>
-                      <Table.HeadCell>Delete</Table.HeadCell>
+                      <Table.HeadCell>{t("dash.dash_post.date")}</Table.HeadCell>
+                      <Table.HeadCell>{t("dash.dash_post.image")}</Table.HeadCell>
+                      <Table.HeadCell>{t("dash.dash_post.title")}</Table.HeadCell>
+                      <Table.HeadCell>{t("dash.dash_post.catrgory")}</Table.HeadCell>
+                      <Table.HeadCell>{t("dash.del")}</Table.HeadCell>
                       <Table.HeadCell>
-                        <span>Edit</span>
+                        <span>{t("dash.edit")}</span>
                       </Table.HeadCell>
                     </Table.Head>
                     {userPosts.map((post) => (
@@ -131,16 +133,14 @@ export default function DashPosts() {
                                 setPostIdToDelete(post._id);
                               }}
                               className='font-medium text-red-500 hover:underline cursor-pointer'
-                            >
-                              Delete
-                            </span>
+                            >{t("admin.delete")} </span>
                           </Table.Cell>
                           <Table.Cell>
                             <Link
                               className='text-teal-500 hover:underline'
                               to={`/update-post/${post._id}`}
                             >
-                              <span>Edit</span>
+                              <span>{t("admin.edit")}</span>
                             </Link>
                           </Table.Cell>
                         </Table.Row>
@@ -170,14 +170,14 @@ export default function DashPosts() {
                   <div className='text-center'>
                     <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
                     <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
-                      Are you sure you want to delete this post?
+                      {t("admin.del_alert")} post?
                     </h3>
                     <div className='flex justify-center gap-4'>
                       <Button color='failure' onClick={handleDeletePost}>
-                        Yes, I'm sure
+                        {t("admin.del_alert")}
                       </Button>
                       <Button color='gray' onClick={() => setShowModal(false)}>
-                        No, cancel
+                        {t("admin.del_no")}
                       </Button>
                     </div>
                   </div>

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @layer tailwind-base, primereact, tailwind-utilities; */
+
+
 body {
   height: 100vh;
 }
@@ -40,3 +43,21 @@ body {
   color: red;
 }
 
+
+
+/* translate selection */
+.trns{
+  border: none;
+  background: none;
+  outline: none;
+
+}
+.trns .trns-opt {
+  background: none;
+  color: black;
+  outline: none;
+} 
+.pass{
+  background: red;
+}
+/* translate selection end */

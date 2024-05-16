@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 // import CallToAction from '../components/CallToAction';
 import CommentSection from '../components/CommentSection';
 import PostCard from '../components/PostCard';
+import { useTranslation } from 'react-i18next';
 
 export default function PostPage() {
   const { postSlug } = useParams();
@@ -11,6 +12,7 @@ export default function PostPage() {
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
   const [recentPosts, setRecentPosts] = useState(null);
+  const [t, i18n] = useTranslation("global");
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -78,7 +80,7 @@ export default function PostPage() {
       <div className='flex justify-between p-3 border-b border-slate-500 mx-auto w-full max-w-2xl text-xs'>
         <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
         <span className='italic'>
-          {post && (post.content.length / 1000).toFixed(0)} mins read
+          {post && (post.content.length / 1000).toFixed(0)} {t("post.mins_read")}
         </span>
       </div>
       <div
@@ -91,7 +93,7 @@ export default function PostPage() {
       <CommentSection postId={post._id} />
 
       <div className='flex flex-col justify-center items-center mb-5'>
-        <h1 className='text-xl mt-5'>Recent articles</h1>
+        <h1 className='text-xl mt-5'>{t("post.recent_articles")}</h1>
         <div className='flex flex-wrap gap-5 mt-5 justify-center'>
           {recentPosts &&
             recentPosts.map((post) => <PostCard key={post._id} post={post} />)}

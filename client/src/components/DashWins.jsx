@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
-import { set } from 'mongoose';
+import { useTranslation } from 'react-i18next';
+
 
 export default function DashWins() {
   const { currentUser } = useSelector((state) => state.user);
@@ -11,6 +12,7 @@ export default function DashWins() {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [winIdToDelete, setWinIdToDelete] = useState('');
+  const [t, i18n] = useTranslation("global");
   useEffect(() => {
     const fetchWins = async () => {
       try {
@@ -82,7 +84,7 @@ export default function DashWins() {
                   gradientDuoTone='purpleToPink'
                   className='w-full'
                 >
-                  Create a Win
+                 {t("dash.add_win")}
                 </Button>
               </Link>
             )}
@@ -92,12 +94,12 @@ export default function DashWins() {
             <>
               <Table hoverable className='shadow-md'>
                 <Table.Head>
-                  <Table.HeadCell>Date updated</Table.HeadCell>
-                  <Table.HeadCell>Win image</Table.HeadCell>
-                  <Table.HeadCell>Win title</Table.HeadCell>
-                  <Table.HeadCell>Delete</Table.HeadCell>
+                  <Table.HeadCell>{t("dash.dash_project.date")}</Table.HeadCell>
+                  <Table.HeadCell>{t("dash.dash_project.image")}</Table.HeadCell>
+                  <Table.HeadCell>{t("dash.dash_project.title")}</Table.HeadCell>
+                  <Table.HeadCell>{t("dash.del")}</Table.HeadCell>
                   <Table.HeadCell>
-                    <span>Edit</span>
+                    <span>{t("dash.edit")}</span>
                   </Table.HeadCell>
                 </Table.Head>
                 {userWins.map((win) => (
@@ -130,16 +132,14 @@ export default function DashWins() {
                             setWinIdToDelete(win._id);
                           }}
                           className='font-medium text-red-500 hover:underline cursor-pointer'
-                        >
-                          Delete
-                        </span>
+                        >{t("admin.delete")} </span>
                       </Table.Cell>
                       <Table.Cell>
                         <Link
                           className='text-teal-500 hover:underline'
                           to={`/update-win/${win._id}`}
                         >
-                          <span>Edit</span>
+                          <span>{t("admin.edit")}</span>
                         </Link>
                       </Table.Cell>
                     </Table.Row>
@@ -169,14 +169,14 @@ export default function DashWins() {
               <div className='text-center'>
                 <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
                 <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
-                  Are you sure you want to delete this win?
+                {t("admin.del_alert")} win?
                 </h3>
                 <div className='flex justify-center gap-4'>
                   <Button color='failure' onClick={handleDeleteWin}>
-                    Yes, I'm sure
+                  {t("admin.del_yes")}
                   </Button>
                   <Button color='gray' onClick={() => setShowModal(false)}>
-                    No, cancel
+                  {t("admin.del_no")}
                   </Button>
                 </div>
               </div>

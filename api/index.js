@@ -8,9 +8,12 @@ import projectRoutes from './routes/project.route.js';
 import winRoutes from './routes/win.route.js';
 import commentRoutes from './routes/comment.route.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors'
 import path from 'path';
 
 dotenv.config();
+const app = express();
+
 
 mongoose
   .connect(process.env.MONGO)
@@ -23,10 +26,10 @@ mongoose
 
 const __dirname = path.resolve();
 
-const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors())
 const port = process.env.PORT || 5000
 
 app.listen(port, () => {
@@ -45,6 +48,13 @@ app.use(express.static(path.join(__dirname, '/client/dist')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
+// app.get('*', function(req, res){
+//   res.status(404).send(
+//       `
+//       <h1 style="color: green; text-align: center; ">Page Not Found 404</h1>
+//       <a href='/' style="color: blue; text-align: center; text-decoration: none;">Home Page</a>
+//       `, 404);
+// });
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
@@ -55,3 +65,18 @@ app.use((err, req, res, next) => {
     message,
   });
 });
+
+
+// cookie
+app.post('/acceptallcookies', (req, res, next) => {
+  const { accepted } = req.body;
+  if (accepted) {
+    // Kuki muvaffaqiyatli qabul qilindi
+    // res.json({ success: true });
+    res.send({accepted: true})
+  } else {
+    res.status(400).json({ success: false });
+    console.log("cookie rad etildi")
+  }
+});
+// cookie

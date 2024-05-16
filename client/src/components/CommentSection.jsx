@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Comment from './Comment';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import { useTranslation } from 'react-i18next';
 
 export default function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
@@ -12,6 +13,7 @@ export default function CommentSection({ postId }) {
   const [comments, setComments] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
+  const [t, i18n] = useTranslation("global");
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -114,7 +116,7 @@ export default function CommentSection({ postId }) {
     <div className='max-w-2xl mx-auto w-full p-3'>
       {currentUser ? (
         <div className='flex items-center gap-1 my-5 text-gray-500 text-sm'>
-          <p>Signed in as:</p>
+          <p>{t("post.com_vuser")}</p>
           <img
             className='h-5 w-5 object-cover rounded-full'
             src={currentUser.profilePicture}
@@ -129,9 +131,9 @@ export default function CommentSection({ postId }) {
         </div>
       ) : (
         <div className='text-sm text-teal-500 my-5 flex gap-1'>
-          You must be signed in to comment.
+          {t("post.post_card.fc_sgn")}
           <Link className='text-blue-500 hover:underline' to={'/sign-in'}>
-            Sign In
+            {t("post.post_card.fc_sgn")}Sign In
           </Link>
         </div>
       )}
@@ -152,7 +154,7 @@ export default function CommentSection({ postId }) {
               {200 - comment.length} characters remaining
             </p>
             <Button outline gradientDuoTone='purpleToBlue' type='submit'>
-              Submit
+              {t("post.post_submit")}
             </Button>
           </div>
           {commentError && (
@@ -163,7 +165,7 @@ export default function CommentSection({ postId }) {
         </form>
       )}
       {comments.length === 0 ? (
-        <p className='text-sm my-5'>No comments yet!</p>
+        <p className='text-sm my-5'>{t("post.post_card.not_comment")}</p>
       ) : (
         <>
           <div className='text-sm my-5 flex items-center gap-1'>
@@ -197,17 +199,15 @@ export default function CommentSection({ postId }) {
           <div className='text-center'>
             <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
             <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
-              Are you sure you want to delete this comment?
+            {t("admin.del_alert")} comment?
             </h3>
             <div className='flex justify-center gap-4'>
               <Button
                 color='failure'
                 onClick={() => handleDelete(commentToDelete)}
-              >
-                Yes, I'm sure
-              </Button>
+              >{t("admin.del_alert")}</Button>
               <Button color='gray' onClick={() => setShowModal(false)}>
-                No, cancel
+              {t("admin.del_no")}
               </Button>
             </div>
           </div>

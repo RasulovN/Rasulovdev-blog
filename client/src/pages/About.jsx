@@ -1,16 +1,19 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import WinCard from '../components/WinCard';
+import WinCard from '../components/about/WinCard';
+import TimeLine from '../components/about/Timeline';
 import { Button, Spinner } from 'flowbite-react';
-
+import allcard from '../components/about/allcard';
+import { useTranslation } from 'react-i18next';
+import AboutCard from '../components/about/AboutCard';
 
 export default function About() {
-
   const { individualWins } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [wins, setWins] = useState(null);
   const [recentWins, setRecentWins] = useState(null);
+  const [t, i18n] = useTranslation("global");
 
   useEffect(() => {
     const fetchWin = async () => {
@@ -58,65 +61,43 @@ export default function About() {
       </div>
     );
   return (
-    <div className='min-h-screen flex items-center justify-center'>
-      <div className='max-w-2xl mx-auto p-3 text-center'>
-        <div>
-          <h1 className='text-3xl font font-semibold text-center my-7'>
-            About Rasulovdev Blog
-          </h1>
-          <div className='text-md text-gray-500 flex flex-col gap-6'>
-            <p>
-            Welcome to Rasulovdev's blog! This blog was created by Rasulov Nurbek as a personal win to share his thoughts and ideas with the world. Nurbek is an avid developer who loves to write about all things technology, coding, and more.
-            </p>
-
-            <p>
-            On this blog you will find weekly articles and tutorials on topics
-              such as web development, software engineering and programming
-              languages.I'm always learning and researching new technologies, so check back often for new content!
-            </p>
-
-            <p>
-              We encourage you to leave comments on our posts and engage with
-              other readers. You can like other people's comments and reply to
-              them as well. We believe that a community of learners can help
-              each other grow and improve.
-            </p>
-          </div>
-        </div>
-        <div>
-          <h1 className='text-3xl font font-semibold text-center my-7'>
-            About Rasulovdev Blog
-          </h1>
-          <div className='text-md text-gray-500 flex flex-col gap-6'>
-            <p>
-            Welcome to Rasulovdev's blog! This blog was created by Rasulov Nurbek as a personal win to share his thoughts and ideas with the world. Nurbek is an avid developer who loves to write about all things technology, coding, and more.
-            </p>
-
-            <p>
-            On this blog you will find weekly articles and tutorials on topics
-              such as web development, software engineering and programming
-              languages. Nurbek is always learning and looking for new things
-              technologies, so check back often for new content!
-            </p>
-
-            <p>
-              We encourage you to leave comments on our posts and engage with
-              other readers. You can like other people's comments and reply to
-              them as well. We believe that a community of learners can help
-              each other grow and improve.
-            </p>
-          </div>
-        </div>
-        {/* Certificate */}
-        <div>
-          <h1 className='text-3xl font font-semibold text-center my-7' >
-            My Certificates
-          </h1>
-              <div className='text-md text-gray-500 flex flex-col gap-6'>
-                 <WinCard key={wins._id} wins={wins}     recentWins={recentWins} id='serf'/>
+    <div className='min-h-screen items-center justify-center '>
+      <div className='max-w-4xl h-96 mx-auto p-3 text-center '  style={{height: '800px', width: '100%'}}>
+          <h1 className='text-3xl font font-semibold text-center my-7' >{t("aboutPage.about_me1")}  </h1>
+              <div className='h-full text-md text-gray-500 flex flex-col gap-6'   style={{height: '800px', width: '100%'}}>
+                <AboutCard />
               </div>
         </div>
-      </div>
-    </div>
+      <div className='max-w-4xl mx-auto p-3'>
+        <div>
+          <h1 className='text-3xl font font-semibold text-center my-7'>{t("aboutPage.about_me")} </h1>
+          <div className='text-md text-gray-500 flex flex-col gap-6'>
+            <p>{t("aboutPage.me")}</p>
+
+            <p>{t("aboutPage.me2")}</p>
+          </div>
+        </div>
+        <div>
+          <h1 className='text-3xl text-center font font-semibold my-7'>
+          {t("aboutPage.about_learn")} 
+          </h1>
+          <div className='text-md text-gray-500 flex flex-col gap-6'>
+            <p>{t("aboutPage.about_learnAb")}  </p>
+
+            <TimeLine />
+          </div>
+        </div>
+        </div>
+        
+        {/* Certificate */}
+        <div className='max-w-4xl mx-auto p-3 text-center '>
+          <h1 className='text-3xl font font-semibold text-center my-7' >{t("aboutPage.win_info")}  </h1>
+              <div className='text-md text-gray-500 flex flex-col gap-6'>
+                 <WinCard key={wins._id} wins={wins}     recentWins={recentWins}/>
+              </div>
+        </div>
+      
+     
+    </div>  
   );
 }

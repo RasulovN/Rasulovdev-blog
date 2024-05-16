@@ -4,18 +4,32 @@ import { errorHandler } from '../utils/error.js';
 import jwt from 'jsonwebtoken';
 
 export const signup = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, confirmPassword } = req.body;
+  const matchPassword = password !== confirmPassword;
+  const validUser = await User.findOne({ email });
+  // const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+  // const isStrongPassword = (password) => {
+  //   return passwordRegex.test(password);
+  // };
 
-  if (
-    !username ||
-    !email ||
-    !password ||
-    username === '' ||
-    email === '' ||
-    password === ''
-  ) {
-    next(errorHandler(400, 'All fields are required'));
+  if (validUser) {
+    return next(errorHandler(404, 'such email is registered'));
   }
+  if(!email || email === '' ||
+     !username || username === '' ||
+     !password || password === ''||
+     !confirmPassword || confirmPassword === ''){
+        return next(errorHandler(404, 'such email is registered'));
+      }
+      // if (!isStrongPassword(password)) {
+      //   return next(errorHandler(404, 'Password must contain at least one lowercase letter, one uppercase letter, and one number'));
+      // }
+      if (password.length < 6) {
+        return next(errorHandler(404, 'Password must be at least 6 characters long'));
+        } 
+      if (matchPassword) {
+        return next(errorHandler(404, 'Passwords did not match'));
+        } 
 
   const hashedPassword = bcryptjs.hashSync(password, 10);
 

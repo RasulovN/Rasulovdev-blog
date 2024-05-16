@@ -1,7 +1,14 @@
 import { Footer } from 'flowbite-react';
 import { Link } from 'react-router-dom';
-import { BsFacebook, BsInstagram, BsTwitter, BsGithub, BsDribbble, BsTelegram } from 'react-icons/bs';
+import { BsFacebook, BsInstagram, BsTwitter, BsGithub, BsDribbble, BsTelegram, BsLinkedin } from 'react-icons/bs';
+import { useTranslation } from 'react-i18next';
+
 export default function FooterCom() {
+  const [t, i18n] = useTranslation("global");
+
+  let deltasoft = (
+    <a href='https://deltaoft.uz' target='blank'>DELTASOFT</a>
+  )
   return (
     <Footer container className='border border-t-8 border-teal-500'>
       <div className='w-full max-w-7xl mx-auto'>
@@ -22,23 +29,34 @@ export default function FooterCom() {
               <Footer.Title title='About' />
               <Footer.LinkGroup col>
                 <Footer.Link
+                  href='/'
+                  // target='_blank'
+                  rel='noopener noreferrer'
+                >{t("footer.home")} </Footer.Link>
+                  <Footer.Link
+                    href='/about'
+                    // target='_blank'
+                    rel='noopener noreferrer'
+                  >{t("footer.about")} </Footer.Link>
+                <Footer.Link
+                  href='/services'
+                  // target='_blank'
+                  rel='noopener noreferrer'
+                >{t("footer.services")} </Footer.Link>
+                <Footer.Link
                   href='/project'
                   // target='_blank'
                   rel='noopener noreferrer'
-                >
-                   Projects
-                </Footer.Link>
+                >{t("footer.project")} </Footer.Link>
                 <Footer.Link
-                  href='/about'
+                  href='/contact'
                   // target='_blank'
                   rel='noopener noreferrer'
-                >
-                  About
-                </Footer.Link>
+                >{t("footer.contact")} </Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title='Follow us' />
+              <Footer.Title title={t("footer.follow")} />
               <Footer.LinkGroup col>
                 <Footer.Link
                   href='https://www.github.com/RasulovN'
@@ -47,14 +65,16 @@ export default function FooterCom() {
                 >
                   Github
                 </Footer.Link>
-                <Footer.Link href='#'>Discord</Footer.Link>
+                <Footer.Link href='https://instagram.com/rasulovdev'>Instagram</Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title='Legal' />
+              <Footer.Title title={t("footer.legal")} />
               <Footer.LinkGroup col>
-                <Footer.Link href='#'>Privacy Policy</Footer.Link>
-                <Footer.Link href='#'>Terms &amp; Conditions</Footer.Link>
+                <Footer.Link  target='_blank'
+                 href='https://firebasestorage.googleapis.com/v0/b/rasulovdev-blog.appspot.com/o/base%2Fraasulovdev.uz-provice.html?alt=media&token=2324bc02-4cbe-46ee-84cc-8953df97e934'>{t("footer.privacy")}</Footer.Link>
+                <Footer.Link
+                target='_blank' href='https://firebasestorage.googleapis.com/v0/b/rasulovdev-blog.appspot.com/o/base%2Ftermis.html?alt=media&token=eae49b33-b03a-4687-a177-c2e2c3273393'>{t("footer.terms")}</Footer.Link>
               </Footer.LinkGroup>
             </div>
           </div>
@@ -62,17 +82,18 @@ export default function FooterCom() {
         <Footer.Divider />
         <div className='w-full sm:flex sm:items-center sm:justify-between'>
           <Footer.Copyright
-            href='#'
-            by="Rasulovdev blog"
+            href='https://deltasoft.uz'
+            target='blank'
+            by="Rasulovdev & DELTASOFT"
             year={new Date().getFullYear()}
           />
           <div className="flex gap-6 sm:mt-0 mt-4 sm:justify-center">
-            <Footer.Icon href='https://facebook.com/rasulovdev' icon={BsFacebook}/>
-            <Footer.Icon href='https://instagram.com/rasulovdev' icon={BsInstagram}/>
-            <Footer.Icon href='https://t.me/rasulovdev' icon={BsTelegram}/>
-            <Footer.Icon href='https://twetter.com' icon={BsTwitter}/>
-            <Footer.Icon href='https://github.com/RasulovN' icon={BsGithub}/>
-            <Footer.Icon href='#' icon={BsDribbble}/>
+            <Footer.Icon href='https://facebook.com/rasulovdev' target='blank' icon={BsFacebook}/>
+            <Footer.Icon href='https://instagram.com/rasulovdev' target='blank' icon={BsInstagram}/>
+            <Footer.Icon href='https://t.me/rasulovdev' target='blank' icon={BsTelegram}/>
+            <Footer.Icon href='https://twetter.com' target='blank' icon={BsTwitter}/>
+            <Footer.Icon href='https://github.com/RasulovN' target='blank' icon={BsGithub}/>
+            <Footer.Icon href='https://linkdin.com/rasulovdev' target='blank' icon={BsLinkedin}/>
 
           </div>
         </div>

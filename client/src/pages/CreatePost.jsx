@@ -1,6 +1,8 @@
-import { Alert, Button, FileInput, Select, TextInput } from 'flowbite-react';
+import { Alert, Button, FileInput, Select, TextInput   } from 'flowbite-react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useTranslation } from 'react-i18next';
+
 import {
   getDownloadURL,
   getStorage,
@@ -19,6 +21,7 @@ export default function CreatePost() {
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
+  const [t, i18n] = useTranslation("global");
 
   const navigate = useNavigate();
 
@@ -84,7 +87,7 @@ export default function CreatePost() {
   };
   return (
     <div className='p-3 max-w-3xl mx-auto min-h-screen'>
-      <h1 className='text-center text-3xl my-7 font-semibold'>Create a post</h1>
+      <h1 className='text-center text-3xl my-7 font-semibold'>{t("dash.add_post")}</h1>
       <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <div className='flex flex-col gap-4 sm:flex-row justify-between'>
           <TextInput
@@ -102,10 +105,12 @@ export default function CreatePost() {
               setFormData({ ...formData, category: e.target.value })
             }
           >
-            <option value='uncategorized'>Select a category</option>
-            <option value='javascript'>JavaScript</option>
-            <option value='reactjs'>React.js</option>
+            <option value='uncategorized'>{t("dash.category")}</option>
+            <option value='javascript'>IT news</option>
+            <option value='reactjs'>INFO</option>
             <option value='nextjs'>Next.js</option>
+            <option value='nextjs'>Angular</option>
+            <option value='nextjs'>Vue.js</option>
           </Select>
         </div>
         <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3'>
@@ -152,7 +157,7 @@ export default function CreatePost() {
           }}
         />
         <Button type='submit' gradientDuoTone='purpleToPink'>
-          Publish
+          {t("dash.publish")}
         </Button>
         {publishError && (
           <Alert className='mt-5' color='failure'>

@@ -11,7 +11,8 @@ import { app } from '../firebase';
 import { useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';import { useTranslation } from 'react-i18next';
+
 
 export default function CreateWin() {
   const [file, setFile] = useState(null);
@@ -19,6 +20,7 @@ export default function CreateWin() {
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
+  const [t, i18n] = useTranslation("global");
 
   const navigate = useNavigate();
 
@@ -77,7 +79,7 @@ export default function CreateWin() {
 
         if (res.ok) {
             setPublishError(null);
-            navigate(`/win/${data.slug}`);
+            navigate(`/about`);
         }
     } catch (error) {
         setPublishError('Something went wrong');
@@ -86,7 +88,7 @@ export default function CreateWin() {
 
    return (
     <div className='p-3 max-w-3xl mx-auto min-h-screen'>
-      <h1 className='text-center text-3xl my-7 font-semibold'>Create a Win</h1>
+      <h1 className='text-center text-3xl my-7 font-semibold'>{t("dash.add_win")}</h1>
       <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <div className='flex flex-col gap-4 sm:flex-row justify-between'>
           <TextInput
@@ -156,7 +158,7 @@ export default function CreateWin() {
           }}
         />
         <Button type='submit' gradientDuoTone='purpleToPink'>
-          Publish
+          {t("dash.add_win")}
         </Button>
         {publishError && (
           <Alert className='mt-5' color='failure'>

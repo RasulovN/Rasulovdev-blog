@@ -2,8 +2,11 @@ import { Button, Select, TextInput } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PostCard from '../components/PostCard';
+import { useTranslation } from 'react-i18next';
+
 
 export default function Search() {
+  const [t, i18n] = useTranslation("global");
   const [sidebarData, setSidebarData] = useState({
     searchTerm: '',
     sort: 'desc',
@@ -106,7 +109,7 @@ export default function Search() {
         <form className='flex flex-col gap-8' onSubmit={handleSubmit}>
           <div className='flex   items-center gap-2'>
             <label className='whitespace-nowrap font-semibold'>
-              Search Term:
+               {t("search.term_search")}
             </label>
             <TextInput
               placeholder='Search...'
@@ -117,33 +120,33 @@ export default function Search() {
             />
           </div>
           <div className='flex items-center gap-2'>
-            <label className='font-semibold'>Sort:</label>
+            <label className='font-semibold'>{t("search.Sort")}</label>
             <Select onChange={handleChange} value={sidebarData.sort} id='sort'>
-              <option value='desc'>Latest</option>
-              <option value='asc'>Oldest</option>
+              <option value='desc'>{t("search.Latest")}</option>
+              <option value='asc'>{t("search.Oldest")}</option>
             </Select>
           </div>
           <div className='flex items-center gap-2'>
-            <label className='font-semibold'>Category:</label>
+            <label className='font-semibold'>{t("search.Category")}</label>
             <Select
               onChange={handleChange}
               value={sidebarData.category}
               id='category'
             >
-              <option value='uncategorized'>Uncategorized</option>
+              <option value='uncategorized'>{t("search.Uncategorized")}</option>
               <option value='reactjs'>React.js</option>
               <option value='nextjs'>Next.js</option>
               <option value='javascript'>JavaScript</option>
             </Select>
           </div>
           <Button type='submit' outline gradientDuoTone='purpleToPink'>
-            Apply Filters
+          {t("search.Apply_Filters")}
           </Button>
         </form>
       </div>
       <div className='w-full'>
         <h1 className='text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5 '>
-          Posts results:
+        Posts results:
         </h1>
         <div className='p-7 flex flex-wrap gap-4'>
           {!loading && posts.length === 0 && (

@@ -12,6 +12,8 @@ import { useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 
 export default function CreateProject() {
   const [file, setFile] = useState(null);
@@ -19,6 +21,7 @@ export default function CreateProject() {
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
+  const [t, i18n] = useTranslation("global");
 
   const navigate = useNavigate();
 
@@ -86,7 +89,7 @@ export default function CreateProject() {
 
    return (
     <div className='p-3 max-w-3xl mx-auto min-h-screen'>
-      <h1 className='text-center text-3xl my-7 font-semibold'>Create a Project</h1>
+      <h1 className='text-center text-3xl my-7 font-semibold'>{t("dash.add_project")}</h1>
       <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <div className='flex flex-col gap-4 sm:flex-row justify-between'>
           <TextInput
@@ -104,7 +107,7 @@ export default function CreateProject() {
               setFormData({ ...formData, category: e.target.value })
             }
           >
-            <option value='uncategorized'>Select a category</option>
+            <option value='uncategorized'>{t("dash.category")}</option>
             <option value='frontend'>Frontend</option>
             <option value='backend'>Backend & API</option>
             <option value='mobile-app'>Mobile APP</option>
@@ -179,7 +182,7 @@ export default function CreateProject() {
           }}
         />
         <Button type='submit' gradientDuoTone='purpleToPink'>
-          Publish
+          {t("dash.publish")}
         </Button>
         {publishError && (
           <Alert className='mt-5' color='failure'>

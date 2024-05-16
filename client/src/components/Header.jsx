@@ -1,11 +1,13 @@
-import { Avatar, Button, Dropdown, Navbar, TextInput } from 'flowbite-react';
+import { Avatar, Button, Dropdown, Navbar, TextInput, Select} from 'flowbite-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { AiOutlineSearch } from 'react-icons/ai';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleTheme } from '../redux/theme/themeSlice';
 import { signoutSuccess } from '../redux/user/userSlice';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import NavSearch from './search/NavSearch';
+import './css/styles.css'
 
 export default function Header() {
   const path = useLocation().pathname;
@@ -14,15 +16,26 @@ export default function Header() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
-  const [searchTerm, setSearchTerm] = useState('');
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get('searchTerm');
-    if (searchTermFromUrl) {
-      setSearchTerm(searchTermFromUrl);
+  const [t, i18n] = useTranslation("global");
+  const [selectedLanguage, setSelectedLanguage] = useState('en'); 
+  
+  
+    const handleLanguageChange = (e) => {
+      setSelectedLanguage(e.target.value);
+      if(e.target.value === "en"){
+        handlechangeLanguage("en")
+      }
+      if(e.target.value === "uz"){
+        handlechangeLanguage("uz")
+      }
+      if(e.target.value === "ru"){
+        handlechangeLanguage("ru")
+      }
     }
-  }, [location.search]);
+
+  const handlechangeLanguage = (lang) => {
+    i18n.changeLanguage(lang); 
+  }
 
   const handleSignout = async () => {
     try {
@@ -40,13 +53,7 @@ export default function Header() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const urlParams = new URLSearchParams(location.search);
-    urlParams.set('searchTerm', searchTerm);
-    const searchQuery = urlParams.toString();
-    navigate(`/search?${searchQuery}`);
-  };
+
 
   return (
     <Navbar className='border-b-2'>
@@ -55,32 +62,12 @@ export default function Header() {
         className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'
       >
         <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>
-          Rasulovdev
+          Rasulov
         </span>
-        Blog
+        dev
       </Link>
-      <form onSubmit={handleSubmit}>
-        <TextInput
-          type='text'
-          placeholder='Search...'
-          rightIcon={AiOutlineSearch}
-          className='hidden lg:inline'
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </form>
-      <Button className='w-12 h-10 lg:hidden' color='gray' pill>
-        <AiOutlineSearch />
-      </Button>
+      <NavSearch />
       <div className='flex gap-2 md:order-2'>
-        <Button
-          className='w-12 h-10 hidden sm:inline'
-          color='gray'
-          pill
-          onClick={() => dispatch(toggleTheme())}
-        >
-          {theme === 'light' ? <FaSun /> : <FaMoon />}
-        </Button>
         {currentUser ? (
           <Dropdown
             arrowIcon={false}
@@ -99,12 +86,12 @@ export default function Header() {
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
             <Dropdown.Divider />
-            <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
+            <Dropdown.Item onClick={handleSignout}>{t("profile.out")}</Dropdown.Item>
           </Dropdown>
         ) : (
           <Link to='/sign-in'>
             <Button gradientDuoTone='purpleToBlue' outline>
-              Sign In
+            {t("sign.sign_in")}
             </Button>
           </Link>
         )}
@@ -112,18 +99,37 @@ export default function Header() {
       </div>
       <Navbar.Collapse>
         <Navbar.Link active={path === '/'} as={'div'}>
-          <Link to='/'>Home</Link>
+          <Link to='/'>{t("header.home")} </Link>
         </Navbar.Link>
         <Navbar.Link active={path === '/about'} as={'div'}>
-          <Link to='/about'>About</Link>
+          <Link to='/about'>{t("header.about")}</Link>
         </Navbar.Link>
         <Navbar.Link active={path === '/contact'} as={'div'}>
-          <Link to='/contact'>Contact</Link>
+          <Link to='/contact'>{t("header.contact")}</Link>
         </Navbar.Link>
         <Navbar.Link active={path === '/project'} as={'div'}>
-          <Link to='/project'>Projects</Link>
+          <Link to='/project'>{t("header.project")}</Link>
         </Navbar.Link>
       </Navbar.Collapse>
+        <Navbar.Collapse>
+        <div className='flex '>
+           <div className='right-2'>
+           <select className='trns bg-gradient-to-r' value={selectedLanguage} onChange={handleLanguageChange}>
+                  <option value="en" className='trns-opt bg-gradient-to-r'>EN</option>
+                  <option value="uz" className='trns-opt'>UZ</option>
+                  <option value="ru" className='trns-opt'>RU</option>
+                </select>
+           </div>
+          <Button
+             className='w-12 h-10 sm:inline left-2'
+             color='gray'
+             pill
+             onClick={() => dispatch(toggleTheme())}>
+             {theme === 'light' ? <FaSun /> : <FaMoon />}
+           </Button>
+            </div>
+        </Navbar.Collapse>
+      
     </Navbar>
   );
 }
